@@ -1,0 +1,1008 @@
+openapi: 3.0.0
+info:
+  title: Finout API
+  description: |
+    An API for Finout, based on the 
+    <a href="https://docs.finout.io/en/collections/166488-api">
+    documentation</a>.
+  version: 1.0.0
+  contact:
+    name: Finout
+    url: https://www.finout.io/
+  license:
+    name: Apache License, Version 2.0
+    url: https://opensource.org/license/apache-2-0
+servers:
+  - url: https://app.finout.io/v1
+paths:
+  /view:
+    get:
+      tags:
+        - cost
+      summary: Get Views
+      description: Retrieves a list of all your account views.
+      responses:
+        '200':
+          description: A list of views.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetViewsResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '429':
+          description: Too Many Requests
+        '503':
+          description: Server Unavailable
+        '504':
+          description: Gateway Timeout
+
+  /cost/query-by-view:
+    post:
+      tags:
+        - cost
+      summary: Query Costs by View
+      description: Returns all costs for a specified view and date range for up to 90 days.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QueryByViewRequest'
+      responses:
+        '200':
+          description: Costs retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueryByViewResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '429':
+          description: Too Many Requests
+        '503':
+          description: Server Unavailable
+        '504':
+          description: Gateway Timeout
+
+  /megabill/query-language/keys:
+    get:
+      tags:
+        - query language
+      summary: Retrieve MegaBill Keys
+      description: Fetches all MegaBill keys and their corresponding values.
+      responses:
+        '200':
+          description: A list of MegaBill keys.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetKeysResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '429':
+          description: Too Many Requests
+        '503':
+          description: Server Unavailable
+        '504':
+          description: Gateway Timeout
+
+  /megabill/query-language/values/{cost_center}/{key}:
+    get:
+      tags:
+        - query language
+      summary: Retrieve Values by Key
+      description: Fetches all values associated with a specific key.
+      parameters:
+        - name: cost_center
+          in: path
+          required: true
+          description: The ID of the cost center.
+          schema:
+            type: string
+        - name: key
+          in: path
+          required: true
+          description: The ID of the key.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Values retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetValuesResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '429':
+          description: Too Many Requests
+        '503':
+          description: Server Unavailable
+        '504':
+          description: Gateway Timeout
+
+  /virtual-tags:
+    get:
+      tags:
+        - virtual tags
+      summary: Retrieve all Virtual Tags
+      description: Gets a list of all Virtual Tag configurations.
+      responses:
+        '200':
+          description: A list of virtual tags.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetVirtualTags'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '429':
+          description: Too Many Requests
+        '503':
+          description: Server Unavailable
+        '504':
+          description: Gateway Timeout
+
+    post:
+      tags:
+        - virtual tags
+      summary: Create a new Virtual Tag
+      description: Creates a new Virtual Tag configuration.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateVirtualTagRequest'
+      responses:
+        '201':
+          description: Virtual Tag created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateVirtualTagResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '429':
+          description: Too Many Requests
+        '503':
+          description: Server Unavailable
+        '504':
+          description: Gateway Timeout
+
+  /virtual-tags/{id}:
+    get:
+      tags:
+        - virtual tags
+      summary: Retrieve a Virtual Tag by ID
+      description: Gets the configuration for a specific Virtual Tag.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the Virtual Tag to retrieve.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Virtual Tag configuration retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetVirtualTagResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '429':
+          description: Too Many Requests
+        '503':
+          description: Server Unavailable
+        '504':
+          description: Gateway Timeout
+
+    put:
+      tags:
+        - virtual tags
+      summary: Update a Virtual Tag
+      description: Updates the configuration of an existing Virtual Tag.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the Virtual Tag to update.
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateVirtualTagRequest'
+      responses:
+        '200':
+          description: Virtual Tag updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateVirtualTagResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '429':
+          description: Too Many Requests
+        '503':
+          description: Server Unavailable
+        '504':
+          description: Gateway Timeout
+
+    delete:
+      tags:
+        - virtual tags
+      summary: Delete a Virtual Tag
+      description: Deletes a specified Virtual Tag configuration.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the Virtual Tag to delete.
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Virtual Tag deleted successfully.
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '429':
+          description: Too Many Requests
+        '503':
+          description: Server Unavailable
+        '504':
+          description: Gateway Timeout
+
+  /cost-guard/scans:
+    get:
+      tags:
+        - costguard
+      summary: Retrieve CostGuard Scans
+      description: Fetches all CostGuard scan options.
+      responses:
+        '200':
+          description: A list of CostGuard scans.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetScansResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '429':
+          description: Too Many Requests
+        '503':
+          description: Server Unavailable
+        '504':
+          description: Gateway Timeout
+
+  /cost-guard/scans-recommendations:
+    post:
+      tags:
+        - costguard
+      summary: Get Scan Recommendations
+      description: Retrieves all resources identified in a scan based on scanId, optional filters, and groupBy.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScanRecommendationsRequest'
+      responses:
+        '200':
+          description: Recommendations retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScanRecommendationsResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '422':
+          description: Unprocessable Request
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal Server Error
+
+  /endpoints:
+    get:
+      tags:
+        - endpoint
+      summary: Get Endpoints
+      description: Retrieves a list of all your account endpoints.
+      responses:
+        '200':
+          description: A list of endpoints.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetEndpoints'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '429':
+          description: Too Many Requests
+        '503':
+          description: Server Unavailable
+        '504':
+          description: Gateway Timeout
+
+    post:
+      tags:
+        - endpoint
+      summary: Create Endpoint
+      description: Creates an email or Slack endpoint in Finout.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateEndpointRequest'
+      responses:
+        '200':
+          description: Endpoint created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateEndpointResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '429':
+          description: Too Many Requests
+        '503':
+          description: Server Unavailable
+        '504':
+          description: Gateway Timeout
+ 
+  /virtual-tags/{vtag_id}/metadata:
+    get:
+      tags:
+        - virtual tag metadata
+      summary: Get Virtual Tag Metadata
+      description: Returns a list of virtual tag values and their corresponding metadata.
+      parameters:
+        - name: vtag_id
+          in: path
+          required: true
+          description: The ID of the virtual tag.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Virtual tag metadata retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetVirtualTagMetadataResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '429':
+          description: Too Many Requests
+        '503':
+          description: Server Unavailable
+        '504':
+          description: Gateway Timeout
+
+    put:
+      tags:
+        - virtual tag metadata
+      summary: Update Virtual Tag Metadata
+      description: Enrich your virtual tag values with groups and custom metadata.
+      parameters:
+        - name: vtag_id
+          in: path
+          required: true
+          description: The ID of the virtual tag.
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateVirtualTagMetadataRequest'
+      responses:
+        '200':
+          description: Virtual tag metadata updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateVirtualTagMetadataResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '429':
+          description: Too Many Requests
+        '503':
+          description: Server Unavailable
+        '504':
+          description: Gateway Timeout
+
+components:
+  schemas:
+    GetViewsResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              id:
+                type: string
+        requestId:
+          type: string
+
+    QueryByViewRequest:
+      type: object
+      properties:
+        viewId:
+          type: string
+        date:
+          type: object
+          properties:
+            unixTimeMillSecondsStart:
+              type: integer
+            unixTimeMillSecondsEnd:
+              type: integer
+        costType:
+          type: string
+          enum:
+            - blendedCost
+            - unblendedCost
+            - netUnblendedCost
+            - amortizedCost
+            - netAmortizedCost
+
+    QueryByViewResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              data:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    time:
+                      type: integer
+                    cost:
+                      type: number
+        request:
+          type: object
+          properties:
+            viewId:
+              type: string
+        requestId:
+          type: string
+
+    GetKeysResponse:
+      type: object
+      properties:
+        request:
+          type: object
+          additionalProperties: {}
+        request_id:
+          type: string
+        error:
+          type: string
+          nullable: true
+        keys:
+          type: array
+          items:
+            type: object
+            properties:
+              costCenter:
+                type: string
+              key:
+                type: string
+              displayName:
+                type: string
+
+    GetValuesResponse:
+      type: object
+      properties:
+        values:
+          type: array
+          items:
+            type: string
+        request:
+          type: object
+          properties:
+            costCenter:
+              type: string
+            key:
+              type: string
+        requestId:
+          type: string
+        accountId:
+          type: string
+
+    GetVirtualTags:
+      type: object
+      properties:
+        accountId:
+          type: string
+        requestId:
+          type: string
+        virtualTags:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              name:
+                type: string
+              rules:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    to:
+                      type: string
+                    filters:
+                      type: object
+                      additionalProperties:
+                        type: string
+              category:
+                type: string
+              createdBy:
+                type: string
+              updatedBy:
+                type: string
+              defaultValue:
+                type: string
+              createdAt:
+                type: string
+                format: date-time
+              updatedAt:
+                type: string
+                format: date-time
+
+    CreateVirtualTagRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        rules:
+          type: array
+          items:
+            type: object
+            properties:
+              to:
+                type: string
+              filters:
+                type: object
+                additionalProperties:
+                  type: string
+        defaultValue:
+          type: string
+
+    CreateVirtualTagResponse:
+      type: object
+      properties:
+        name:
+          type: string
+        rules:
+          type: array
+          items:
+            type: object
+            properties:
+              to:
+                type: string
+              filters:
+                type: object
+                additionalProperties:
+                  type: string
+        category:
+          type: string
+        createdBy:
+          type: string
+        updatedBy:
+          type: string
+        defaultValue:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        id:
+          type: string
+
+    GetVirtualTagResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        rules:
+          type: array
+          items:
+            type: object
+            properties:
+              to:
+                type: string
+              filters:
+                type: object
+                additionalProperties:
+                  type: string
+        category:
+          type: string
+        createdBy:
+          type: string
+        updatedBy:
+          type: string
+        defaultValue:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    UpdateVirtualTagRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        rules:
+          type: array
+          items:
+            type: object
+            properties:
+              to:
+                type: string
+              filters:
+                type: object
+                additionalProperties:
+                  type: string
+        defaultValue:
+          type: string
+
+    UpdateVirtualTagResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+        name:
+          type: string
+        rules:
+          type: array
+          items:
+            type: object
+            properties:
+              to:
+                type: string
+              filters:
+                type: object
+                additionalProperties:
+                  type: string
+        defaultValue:
+          type: string
+
+    GetScansResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+        scans:
+          type: array
+          items:
+            type: object
+            properties:
+              scanId:
+                type: string
+              scanName:
+                type: string
+              scanLastRunTime:
+                type: integer
+              scanMetadata:
+                type: object
+                properties:
+                  type:
+                    type: string
+                  costCenter:
+                    type: string
+                  analysisDays:
+                    type: integer
+
+    ScanRecommendationsRequest:
+      type: object
+      properties:
+        scanId:
+          type: string
+        filters:
+          type: object
+          additionalProperties:
+            type: string
+        groupBy:
+          type: object
+          additionalProperties:
+            type: string
+
+    ScanRecommendationsResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+        scanId:
+          type: string
+        scanName:
+          type: string
+        scanLastRunTime:
+          type: integer
+        scanTotalCost:
+          type: number
+        scanTotalWaste:
+          type: number
+        scanYearlyPotentialSavings:
+          type: number
+        scanMetadata:
+          type: object
+          properties:
+            type:
+              type: string
+            costCenter:
+              type: string
+            analysisDays:
+              type: integer
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              group:
+                type: string
+              groupTotalCost:
+                type: number
+              groupTotalWaste:
+                type: number
+              groupYearlyPotentialSavings:
+                type: number
+              resources:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    resourceId:
+                      type: string
+                    resourceMetadata:
+                      type: object
+                      properties:
+                        accountName:
+                          type: string
+                        instanceType:
+                          type: string
+                    resourceTotalWaste:
+                      type: number
+                    resourceTotalCost:
+                      type: number
+                    resourceYearlyPotentialSavings:
+                      type: number
+                    resourceMetrics:
+                      type: object
+                      properties:
+                        usedCpu:
+                          type: number
+                    resourceRecommendations:
+                      type: object
+                      properties:
+                        targetCpu:
+                          type: number
+                        targetMemory:
+                          type: number
+                        targetInstanceType:
+                          type: string
+
+    GetEndpoints:
+      type: object
+      properties:
+        endpoints:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+                description: The endpoint type (email or Slack).
+              name:
+                type: string
+                description: The name of the endpoint.
+              configuration:
+                type: object
+                properties:
+                  to:
+                    type: string
+                    description: The destination address or endpoint for the notification.
+              createdBy:
+                type: string
+                description: The creator of the endpoint.
+              createdAt:
+                type: string
+                format: date-time
+                description: The time and date the endpoint was created.
+              id:
+                type: string
+                description: The unique identifier of the endpoint.
+              requestId:
+                type: string
+                description: The ID of this specific request.
+
+    CreateEndpointRequest:
+      type: object
+      properties:
+        type:
+          type: string
+          description: The endpoint type (Email or Slack).
+        name:
+          type: string
+          description: The name of the endpoint.
+        configuration:
+          type: object
+          properties:
+            to:
+              type: string
+              description: The destination address for notifications (email address or Slack webhook URL).
+
+    CreateEndpointResponse:
+      type: object
+      properties:
+        endpoint:
+          type: object
+          properties:
+            accountId:
+              type: string
+              description: The account ID of the endpoint.
+            createdBy:
+              type: string
+              description: The creator of the endpoint.
+            type:
+              type: string
+              description: The endpoint type (email or Slack).
+            name:
+              type: string
+              description: The name of the endpoint.
+            configuration:
+              type: object
+              properties:
+                to:
+                  type: string
+                  description: The destination address or endpoint for the notification.
+            createdAt:
+              type: string
+              format: date-time
+              description: The time and date the endpoint was created.
+            updatedAt:
+              type: string
+              format: date-time
+              description: The time and date the endpoint was updated.
+            id:
+              type: string
+              description: The unique identifier of your account's views.
+        requestId:
+          type: string
+          description: The ID of this specific request.
+
+    GetVirtualTagMetadataResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              groups:
+                type: array
+                items:
+                  type: string
+              customMetadata:
+                type: object
+                additionalProperties:
+                  type: string
+
+    UpdateVirtualTagMetadataRequest:
+      type: object
+      additionalProperties:
+        type: object
+        properties:
+          groups:
+            type: array
+            items:
+              type: string
+          customMetadata:
+            type: object
+            additionalProperties:
+              type: string
+
+    UpdateVirtualTagMetadataResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              groups:
+                type: array
+                items:
+                  type: string
+              customMetadata:
+                type: object
+                additionalProperties:
+                  type: string
+        request:
+          type: object
+          properties:
+            virtualTagId:
+              type: string
+  securitySchemes:
+    clientID:
+      type: apiKey
+      in: header
+      name: x-finout-client-id
+    secretKey:
+      type: apiKey
+      in: header
+      name: x-finout-secret-key
+
+security:
+  - clientID:  []
+    secretKey: [] 

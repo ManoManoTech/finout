@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=finout.yaml
+package: finout
+output: ../finout.gen.go
+generate:
+  models: true
+  client: true
