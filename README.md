@@ -65,7 +65,7 @@ func main() {
 If you need to regenerate the client, you can use the following command:
 
 ```bash
-go generate tools/tools.go
+go generate
 ```
 
 # Documentation
