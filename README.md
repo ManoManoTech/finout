@@ -52,6 +52,7 @@ func main() {
         if err != nil {
             log.Fatal(err)
         }
+
         bodyString := string(bodyBytes)
         log.Println(bodyString)
     } else {
