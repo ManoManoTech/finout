@@ -1,8 +1,8 @@
 # Introduction
 
-**This library allows you to quickly and easily use the Finout API via Go.**
+**This package allows you to quickly and easily use the Finout API via Go.**
 
-This library provides full support for all Finout [API](https://docs.finout.io/en/collections/166488-api) endpoints.
+This package provides full support for all Finout [API](https://docs.finout.io/en/collections/166488-api) endpoints.
 
 # Installation
 
@@ -12,7 +12,7 @@ This library provides full support for all Finout [API](https://docs.finout.io/e
 
 ## Dependencies
 
-- [oapi-codegen](https://github.com/oapi-codegen/oapi-codegen), this library is basically the generated code from oapi-codent for the forged Finout API spec.
+- [oapi-codegen](https://github.com/oapi-codegen/oapi-codegen), this package is basically the generated code from oapi-codegen for the forged Finout API spec.
 
 # Quick Start
 
