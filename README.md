@@ -8,7 +8,7 @@ This library provides full support for all Finout [API](https://docs.finout.io/e
 
 ## Install Package
 
-`go get github.com/trois-six/finout`
+`go get github.com/ManoManoTech/finout`
 
 ## Dependencies
 
@@ -29,7 +29,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/trois-six/finout"
+	"github.com/ManoManoTech/finout"
 )
 
 func main() {
@@ -60,6 +60,14 @@ func main() {
 }
 ```
 
+## Regenerate the client
+
+If you need to regenerate the client, you can use the following command:
+
+```bash
+go generate tools/tools.go
+```
+
 # Documentation
 
-If you need to check the spec, you can use the [Swagger Editor](https://editor.swagger.io/?url=https://raw.githubusercontent.com/trois-six/finout/refs/heads/main/finout.yaml) with the spec in `finout.yaml`.
+If you need to check the spec, you can use the [Swagger Editor](https://editor.swagger.io/?url=https://raw.githubusercontent.com/ManoManoTech/finout/refs/heads/main/finout.yaml) with the spec in `finout.yaml`.

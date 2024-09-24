@@ -1,4 +1,4 @@
-module github.com/trois-six/finout
+module github.com/ManoManoTech/finout
 
 go 1.23.1
 
