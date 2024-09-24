@@ -24,12 +24,12 @@ The following is the minimum needed code to call the Finout API.
 package main
 
 import (
-	"context"
-	"io"
-	"log"
-	"net/http"
+    "context"
+    "io"
+    "log"
+    "net/http"
 
-	"github.com/ManoManoTech/finout"
+    "github.com/ManoManoTech/finout"
 )
 
 func main() {
