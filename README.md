@@ -33,30 +33,22 @@ import (
 )
 
 func main() {
-    client, err := finout.NewSecuredClient("YOUR_CLIENT_ID", "YOUR_SECRET_KEY")
+    client, err := finout.NewSecuredClientWithResponses("YOUR_CLIENT_ID", "YOUR_SECRET_KEY")
     if err != nil {
         log.Fatal(err)
     }
 
-    ctx := context.Background()
-
-    resp, err := client.GetView(ctx)
+    resp, err := client.GetViewWithResponse(context.Background())
     if err != nil {
         log.Fatal(err)
     }
 
-    defer resp.Body.Close()
-
-    if resp.StatusCode == http.StatusOK {
-        bodyBytes, err := io.ReadAll(resp.Body)
-        if err != nil {
-            log.Fatal(err)
+    if resp.StatusCode() == http.StatusOK {
+        for _, view := range *resp.JSON200.Data {
+            log.Println(*view.Id, *view.Name)
         }
-
-        bodyString := string(bodyBytes)
-        log.Println(bodyString)
     } else {
-        log.Fatalf("Status code: %d", resp.StatusCode)
+        log.Fatalf("Status code: %d", resp.StatusCode())
     }
 }
 ```
