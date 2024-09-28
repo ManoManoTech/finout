@@ -43,7 +43,7 @@ func main() {
         log.Fatal(err)
     }
 
-    if resp.StatusCode() == http.StatusOK {
+    if resp.StatusCode() == http.StatusOK && resp.JSON200 != nil && resp.JSON200.Data != nil {
         for _, view := range *resp.JSON200.Data {
             log.Println(*view.Id, *view.Name)
         }
